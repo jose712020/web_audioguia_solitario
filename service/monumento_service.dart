@@ -142,13 +142,17 @@ class MonumentoService {
           : [],
       "picture": monumento.imagenUrl != null
           ? [
-              {"url": monumento.imagenUrl},
+              {
+                if (monumento.pictureId != null) "id": monumento.pictureId,
+                "url": monumento.imagenUrl
+              },
             ]
           : [],
 
       "audio": monumento.audioUrl != null
           ? [
               {
+                if (monumento.audioId != null) "id": monumento.audioId,
                 "url": monumento.audioUrl,
                 "kids": monumento.paraNinos,
                 "language": monumento.idioma,

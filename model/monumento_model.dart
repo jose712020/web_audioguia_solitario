@@ -16,6 +16,9 @@ class Monumento {
   final String descripcionContenido;
   final String descripcionNombre;
   final int? descripcionId;
+  final int? pictureId;
+  final int? audioId;
+  
 
   Monumento({
     this.id,
@@ -35,6 +38,8 @@ class Monumento {
     this.audioUrl,
     this.likes = 0,
     this.descripcionId,
+    this.pictureId,
+    this.audioId,
   });
 
   factory Monumento.fromJson(Map<String, dynamic> json) {
@@ -47,13 +52,15 @@ class Monumento {
         (listaAudios != null && listaAudios.isNotEmpty)
         ? listaAudios[0] as Map<String, dynamic>
         : null;
-
+    final int? audId = primerAudio != null ? primerAudio['id'] as int? : null;
     final pictureList = json['picture'] as List?;
     final List<String> allImages = [];
     String? firstImage;
+    int? picId;
 
     if (pictureList != null && pictureList.isNotEmpty) {
       firstImage = pictureList[0]['url'];
+      picId = pictureList[0]['id'] as int?;
       for (var pic in pictureList) {
         if (pic['url'] != null) {
           allImages.add(pic['url'].toString());
@@ -85,6 +92,8 @@ class Monumento {
       sinopsis: primeraDescripcion != null ? (primeraDescripcion['complete'] ?? false) : false,
       descripcionContenido: primeraDescripcion != null ? (primeraDescripcion['contenido'] ?? '') : '',
       descripcionNombre: primeraDescripcion != null ? (primeraDescripcion['name'] ?? '') : '',
+      pictureId: picId,
+      audioId: audId,
       descripcionId: descId,
     );
   }
