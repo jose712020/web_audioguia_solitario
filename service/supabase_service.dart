@@ -5,9 +5,10 @@ class SupabaseService {
   final SupabaseClient _client = Supabase.instance.client;
 
   Future<String?> subirImagen(
+    String bucket,
     Uint8List bytes,
     String nombreArchivo, {
-    String carpeta = 'noticias',
+    String carpeta = '',
   }) async {
     try {
       final extension = nombreArchivo.split('.').last;
@@ -16,7 +17,7 @@ class SupabaseService {
       final ruta = carpeta.isNotEmpty ? '$carpeta/$uniqueName' : uniqueName;
 
       await _client.storage
-          .from('monumentos')
+          .from(bucket)
           .uploadBinary(
             ruta,
             bytes,
@@ -26,10 +27,11 @@ class SupabaseService {
             ),
           );
 
-      final urlPublica = _client.storage.from('monumentos').getPublicUrl(ruta);
+      final urlPublica = _client.storage.from(bucket).getPublicUrl(ruta);
       return urlPublica;
     } catch (e) {
-      return null;
+      print('=== ERROR SUPABASE ===: $e');
+      throw Exception(e.toString());
     }
   }
 
@@ -49,7 +51,7 @@ class SupabaseService {
     }
   }
 
-  Future<String?> subirAudio(Uint8List bytes, String nombreArchivo) async {
+  Future<String?> subirAudio(String bucket, Uint8List bytes, String nombreArchivo) async {
     try {
       final extension = nombreArchivo.split('.').last;
       final timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -57,7 +59,7 @@ class SupabaseService {
       final ruta = uniqueName;
 
       await _client.storage
-          .from('monumentos')
+          .from(bucket)
           .uploadBinary(
             ruta,
             bytes,
@@ -67,7 +69,7 @@ class SupabaseService {
             ),
           );
 
-      final urlPublica = _client.storage.from('monumentos').getPublicUrl(ruta);
+      final urlPublica = _client.storage.from(bucket).getPublicUrl(ruta);
       return urlPublica;
     } catch (e) {
       return null;
