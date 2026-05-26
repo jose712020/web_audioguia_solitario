@@ -11,14 +11,16 @@ import 'package:audioguia_web/provider/tema_provider.dart';
 import 'package:audioguia_web/provider/config_provider.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(
-    url: 'https://axhthfoqdxickibsblrq.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4aHRoZm9xZHhpY2tpYnNibHJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NDkwMTEsImV4cCI6MjA4OTMyNTAxMX0.3ZDRL88ElYlUOyf4T5N_YX3OeT4mHXhT9SCGPndzPGc',
+    url: dotenv.env['SUPABASE_URL'] ?? '',
+    anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
   );
 
   runApp(
