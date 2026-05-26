@@ -1,16 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../config/api_config.dart';
 
 class RendimientoService {
-  final String _baseUrl = 'https://backend-tfg.fly.dev/api/v1';
+  String get _baseUrl => ApiConfig.baseUrl;
 
-  Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Basic ${base64Encode(utf8.encode('admin:admin123'))}',
-    'Access-Control-Allow-Origin': '*',
-  };
+  Map<String, String> get _headers => ApiConfig.adminHeaders;
 
   Future<List<dynamic>> obtenerEstadisticasIA() async {
     final response = await http.get(
