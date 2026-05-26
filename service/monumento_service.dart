@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/monumento_model.dart';
+import '../config/api_config.dart';
 
 class MonumentoService {
-  final String _urlPublic = 'https://backend-tfg.fly.dev/api/v1/public/monuments';
-  final String _urlAdmin = 'https://backend-tfg.fly.dev/api/v1/admin/monuments';
+  String get _urlPublic => '${ApiConfig.baseUrl}/public/monuments';
+  String get _urlAdmin => '${ApiConfig.baseUrl}/admin/monuments';
 
   Future<List<Monumento>?> obtenerTodos() async {
     try {
@@ -39,12 +39,7 @@ class MonumentoService {
     }
   }
 
-  Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Basic ${base64Encode(utf8.encode('admin:admin123'))}',
-    'Access-Control-Allow-Origin': '*',
-  };
+  Map<String, String> get _headers => ApiConfig.adminHeaders;
 
   Future<bool> crearMonumento({
     required Monumento monumento,
@@ -92,16 +87,10 @@ class MonumentoService {
         'NLikes': monumento.likes,
       };
 
-      debugPrint("Enviando JSON completo y corregido al backend...");
-
       final response = await http.post(
         uri,
         headers: _headers,
         body: jsonEncode(bodyJson),
-      );
-
-      debugPrint(
-        "Respuesta servidor crear: ${response.statusCode} - ${response.body}",
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -110,7 +99,6 @@ class MonumentoService {
         throw Exception('Error al crear monumento: ${response.body}');
       }
     } catch (e) {
-      debugPrint("Excepción en crearMonumento: $e");
       rethrow;
     }
   }
@@ -172,7 +160,6 @@ class MonumentoService {
 
       return response.statusCode == 200 || response.statusCode == 204;
     } catch (e) {
-      debugPrint("Error en editarMonumento HTTP: $e");
       return false;
     }
   }
