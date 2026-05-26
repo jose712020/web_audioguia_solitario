@@ -42,6 +42,50 @@ class Monumento {
     this.audioId,
   });
 
+  Monumento copyWith({
+    String? id,
+    String? nombre,
+    String? categoria,
+    bool? accesible,
+    bool? activo,
+    double? latitud,
+    double? longitud,
+    String? imagenUrl,
+    List<String>? imagenesUrls,
+    String? audioUrl,
+    int? likes,
+    bool? paraNinos,
+    String? idioma,
+    bool? sinopsis,
+    String? descripcionContenido,
+    String? descripcionNombre,
+    int? descripcionId,
+    int? pictureId,
+    int? audioId,
+  }) {
+    return Monumento(
+      id: id ?? this.id,
+      nombre: nombre ?? this.nombre,
+      categoria: categoria ?? this.categoria,
+      accesible: accesible ?? this.accesible,
+      activo: activo ?? this.activo,
+      latitud: latitud ?? this.latitud,
+      longitud: longitud ?? this.longitud,
+      imagenUrl: imagenUrl ?? this.imagenUrl,
+      imagenesUrls: imagenesUrls ?? this.imagenesUrls,
+      audioUrl: audioUrl ?? this.audioUrl,
+      likes: likes ?? this.likes,
+      paraNinos: paraNinos ?? this.paraNinos,
+      idioma: idioma ?? this.idioma,
+      sinopsis: sinopsis ?? this.sinopsis,
+      descripcionContenido: descripcionContenido ?? this.descripcionContenido,
+      descripcionNombre: descripcionNombre ?? this.descripcionNombre,
+      descripcionId: descripcionId ?? this.descripcionId,
+      pictureId: pictureId ?? this.pictureId,
+      audioId: audioId ?? this.audioId,
+    );
+  }
+
   factory Monumento.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic>? coords = json['coordenates'];
     final double lat = coords != null ? (coords['lat'] ?? 0.0).toDouble() : 0.0;
