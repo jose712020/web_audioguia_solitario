@@ -7,12 +7,13 @@ class LabelCampo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Text(
       label,
       style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        color: Colors.grey[700],
+        color: isDark ? Colors.grey[400] : Colors.grey[700],
       ),
     );
   }
