@@ -50,7 +50,6 @@ class RendimientoProvider with ChangeNotifier {
             .toList(),
       );
     } catch (e) {
-      debugPrint("¡ERROR CAPTURADO!: $e");
       _error = e.toString();
     } finally {
       _isLoading = false;
