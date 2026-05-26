@@ -48,25 +48,3 @@ class MonumentStat {
     );
   }
 }
-
-class IaStat {
-  final String name;
-  final int count;
-
-  IaStat({required this.name, required this.count});
-
-  factory IaStat.fromJson(Map<String, dynamic> json) =>
-      IaStat(name: json["nameCount"], count: json["count"] ?? 0);
-}
-
-class DescargaStat {
-  final String nombrePlataforma;
-  final int totalDownloads;
-
-  DescargaStat({required this.nombrePlataforma, required this.totalDownloads});
-
-  factory DescargaStat.fromJson(Map<String, dynamic> json) => DescargaStat(
-    nombrePlataforma: json["name"],
-    totalDownloads: json["totalDownloads"] ?? 0,
-  );
-}
