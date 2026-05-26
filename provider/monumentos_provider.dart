@@ -67,6 +67,7 @@ class GestionMonumentoProvider extends ChangeNotifier {
 
       if (_imagenBytes != null && _imagenNombre != null) {
         urlImagenSubida = await _supabaseService.subirImagen(
+          'monumentos',
           _imagenBytes!,
           _imagenNombre!,
         );
@@ -77,6 +78,7 @@ class GestionMonumentoProvider extends ChangeNotifier {
 
       if (_audioBytes != null && _audioNombre != null) {
         urlAudioSubido = await _supabaseService.subirAudio(
+          'monumentos',
           _audioBytes!,
           _audioNombre!,
         );
